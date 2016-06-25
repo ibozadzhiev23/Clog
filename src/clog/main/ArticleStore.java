@@ -1,20 +1,16 @@
 package clog.main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import about.article.CatchWord;
 import article.Article;
 
 
-public class ArticleStore{
+public class ArticleStore implements Serializable{
 
-	private ReadPrint io; 
-	private ArrayList<Article> store;
+	private ArrayList<Article> store = new ArrayList<>();
 	
-	public ArticleStore(){
-		store = new ArrayList<>();
-		io = new ReadPrint();
-	}
 	public void store(Article a){
 		store.add(a);
 	}

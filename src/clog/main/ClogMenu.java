@@ -8,15 +8,8 @@ import article.ArticleSearch;
 
 public class ClogMenu {
 
-	private static ReadPrint io;
-	private static ArticleWritter aw;
-	private static ArticleStore store;
-	
-	public ClogMenu(){
-		io = new ReadPrint();
-		aw = new ArticleWritter();
-		store = new ArticleStore();
-	}
+	private static ReadPrint io = new ReadPrint();
+	private static ArticleStore store = new ArticleStore();
 	
 	public static void printMenu(){
 		io.println("Waehlen Sie eine der folgenden Optionen aus : ");
@@ -34,6 +27,7 @@ public class ClogMenu {
 	public static void chooseOption(int opt){
 		switch(opt){
 		case 1:
+			ArticleWritter aw = new ArticleWritter();
 			Article a = aw.makeArticle();
 			store.store(a);
 			printMenu();
@@ -54,14 +48,25 @@ public class ClogMenu {
 			chooseOption(readOption());
 			break;
 		case 3:
-			
+			ClogLoader loader = new ClogLoader();
+			loader.exists(io);
+			store = loader.load();
+			printMenu();
+			chooseOption(readOption());
 			break;
 		case 4:
+			ClogSaver saver = new ClogSaver();
+			if(store.size()==0)
+				io.println("Es gibt nichts zu speichern");
+			if(store.size() > 0){
+				saver.save(store);
+			}
+			printMenu();
+			chooseOption(readOption());
 			break;
 		case 5:
 			io.println("Exit");
 			System.exit(0);
 		}
 	}
-	
 }
